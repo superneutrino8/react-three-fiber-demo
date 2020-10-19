@@ -1,12 +1,12 @@
 import React, { useRef } from "react";
 import { Canvas, useFrame } from "react-three-fiber";
-import { softShadows } from "drei";
+import { softShadows, MeshWobbleMaterial, OrbitControls } from "drei";
 
 import "./App.scss";
 
 softShadows();
 
-const SpiningBox = ({ position, args, color }) => {
+const SpiningBox = ({ position, args, color, speed, factor }) => {
   const mesh = useRef(null);
 
   useFrame(() => (mesh.current.rotation.x = mesh.current.rotation.y += 0.01));
@@ -14,7 +14,12 @@ const SpiningBox = ({ position, args, color }) => {
   return (
     <mesh position={position} ref={mesh} castShadow>
       <boxBufferGeometry attach="geometry" args={args} />
-      <meshStandardMaterial attach="material" color={color} />
+      <MeshWobbleMaterial
+        attach="material"
+        color={color}
+        speed={speed}
+        factor={factor}
+      />
     </mesh>
   );
 };
@@ -54,9 +59,26 @@ function App() {
           </mesh>
         </group>
 
-        <SpiningBox position={[0, 1, 0]} args={[3, 2, 1]} color="lightblue" />
-        <SpiningBox position={[-2, 1, -5]} color="lightpink" />
-        <SpiningBox position={[5, 1, -2]} color="lightpink" />
+        <SpiningBox
+          position={[0, 1, 0]}
+          args={[3, 2, 1]}
+          color="lightblue"
+          speed={2}
+          factor={0.5}
+        />
+        <SpiningBox
+          position={[-2, 1, -5]}
+          color="lightpink"
+          speed={6}
+          factor={1}
+        />
+        <SpiningBox
+          position={[5, 1, -2]}
+          color="lightpink"
+          speed={5.5}
+          factor={1}
+        />
+        <OrbitControls />
       </Canvas>
     </>
   );
