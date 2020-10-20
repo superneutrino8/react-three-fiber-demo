@@ -7,7 +7,8 @@ Frontend is built using React and react-three-fiber.
 
 - React
 - react-three-fiber
-
+- drei
+- React Spring
 
 ## License
 
